@@ -40,7 +40,7 @@ export class WebsocketExceptionsFilter implements WsExceptionFilter {
             message = exception.message;
         }
         
-        Logger.error(`WebSocket Error: [${status}] ${message}`, exception instanceof Error ? exception.stack : 'No stack');
+        // Logger.error(`WebSocket Error: [${status}] ${message}`, exception instanceof Error ? exception.stack : 'No stack');
 
         // Envia o erro de volta ao cliente
         client.emit('error', {
