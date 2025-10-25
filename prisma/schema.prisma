@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+// Users Table
+
+model User {
+  id            String       @id @default(uuid())
+  email         String       @unique
+  name          String
+  password      String
+  avatar        String?
+  total_matches Int          @default(0)
+  best_wpm      Int          @default(0)
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  Tournament    Tournament[]
+}
+
+// Tournaments Table
+model Tournament {
+  id           String        @id @default(uuid())
+  name         String
+  description  String?
+  start_date   DateTime?
+  end_date     DateTime?
+  created_by   String
+  status       String        @default("upcoming")
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  created      User          @relation(fields: [created_by], references: [id])
+  participants Participant[]
+
+  @@index([created_by])
+}
+
+// Participants Table
+
+model Participant {
+  id            String      @id @default(uuid())
+  tournament_id String
+  user_id       String
+  joined_at     DateTime    @default(now())
+  Tournament    Tournament? @relation(fields: [tournamentId], references: [id])
+  tournamentId  String?
+
+  @@unique([tournament_id, user_id])
+}
