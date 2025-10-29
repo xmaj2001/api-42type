@@ -17,7 +17,7 @@ import { TournamentGateway } from './gateway/tournament.gateway';
       provide: TournamentRepository,
       useClass: TournamentPrismaRepository,
     },
-    TournamentGateway
+    // TournamentGateway
   ],
 })
 export class TournamentModule { }

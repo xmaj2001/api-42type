@@ -7,6 +7,7 @@ import { getCacheTTL } from './utils/tll';
 import { UserModule } from './modules/user/user.module';
 import { TournamentModule } from './modules/tournament/tournament.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { RoomModule } from './modules/room/room.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UserModule,
     TournamentModule,
     AuthModule,
+    RoomModule,
   ],
 })
 export class AppModule {}

@@ -29,7 +29,7 @@ export class TournamentGateway {
   }
 
   @UsePipes(new WsValidationPipe())
-  @SubscribeMessage('join')
+  @SubscribeMessage('join-room')
   async handleJoinTournament(client: Socket, payload: JoinTournamentDto) {
     Logger.log(`O jogador ${payload.user_id} está tentando entrar no torneio ${payload.tournament_id}`);
     const result = await this.tournamentService.joinTournament(payload);

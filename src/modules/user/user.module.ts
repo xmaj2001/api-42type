@@ -13,8 +13,8 @@ import { PrismaService } from 'nestjs-prisma';
     {
       provide: UserRepository,
       useClass: UserPrismaRepository,
-    }
+    },
   ],
-  exports: [UserRepository]
+  exports: [UserRepository, UserService],
 })
 export class UserModule { }

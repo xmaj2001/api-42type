@@ -21,6 +21,41 @@ model User {
   created_at    DateTime     @default(now())
   updated_at    DateTime     @updatedAt
   Tournament    Tournament[]
+  Room          Room[]
+  Player        Player[]
+  @@map("users")
+}
+
+// Room table
+
+model Room {
+  id         String   @id @default(uuid())
+  code       String   @unique
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  creator_id String
+  Creator    User     @relation(fields: [creator_id], references: [id])
+  Players    Player[]
+  @@index([creator_id])
+  @@map("rooms")
+}
+
+model Player {
+  id         String   @id @default(uuid())
+  user_id    String
+  name       String
+  avatar     String?
+  progress   Int      @default(0)
+  wpm        Int      @default(0)
+  isFinished Boolean  @default(false)
+  joined_at  DateTime @default(now())
+  code       String
+  Room       Room     @relation(fields: [code], references: [code])
+  User       User     @relation(fields: [user_id], references: [id])
+
+  @@index([code])
+  @@map("room_players")
 }
 
 // Tournaments Table
@@ -38,6 +73,7 @@ model Tournament {
   participants Participant[]
 
   @@index([created_by])
+  @@map("tournaments")
 }
 
 // Participants Table
@@ -51,4 +87,6 @@ model Participant {
   tournamentId  String?
 
   @@unique([tournament_id, user_id])
+  @@index([user_id])
+  @@map("participants")
 }
